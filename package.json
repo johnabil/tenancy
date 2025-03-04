@@ -1,6 +1,6 @@
 {
   "name": "node-tenancy",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Automatic multi-tenancy for Node with support to Rabbitmq",
   "main": "index.js",
   "homepage": "https://github.com/johnabil/tenancy#readme",
