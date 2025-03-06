@@ -1,6 +1,7 @@
-# Tenancy for Node js
+# Tenancy for Node.js
 
-a package to implement multi tenant apps in node with ease
+a package to implement multi tenant apps in node with ease.
+Trying to make it like [Tenancy for Laravel](https://tenancyforlaravel.com)
 
 ## Table of Contents
 
@@ -11,6 +12,8 @@ a package to implement multi tenant apps in node with ease
         - [Middleware](#1-middlewares)
         - [Queue](#2-queue-connection)
         - [Config](#3-config-obj)
+        - [Tenant Model](#4-tenant-model)
+        - [Models](#5-using-app-models)
 
 ## Support
 
@@ -54,9 +57,8 @@ for each tenant based on domains registered to each tenant.
 const express = require('express');
 const router = express.Router();
 const tenancy = require('node-tenancy');
-const app = express();
 
-app.use(tenancy.initializeTenancyMiddleware);
+router.use(tenancy.initializeTenancyMiddleware);
 
 router.get('/get', function (Request, Response) {
   return Response.status(200).json("Hello");
@@ -69,12 +71,13 @@ router.get('/get', function (Request, Response) {
 const express = require('express');
 const router = express.Router();
 const tenancy = require('node-tenancy');
-const app = express();
 
-app.use(tenancy.initializeCentralMiddleware);
+router.use(tenancy.initializeCentralMiddleware);
 
 router.get('/get', function (Request, Response) {
-  return Response.status(200).json("Hello");
+  return Response.status(200).json({
+    'tenant_id': tenancy.config.getConfig().tenant_id
+  });
 });
 ```
 
@@ -112,6 +115,39 @@ queue.connect(queue.getConnectionUrl(), function (connectionErr, connection) {
 
 #### 3. Config obj
 
+**Make sure to add those values before using middlewares.**
+
+```js
+const {config} = require('node-tenancy');
+
+
+config.setConfig({
+  "central_domains": [
+    "test"
+  ],
+  "tenant_schemas": {
+    "Model": require('Schema')
+  },
+  "central_schemas": {
+    'Tenant': require('node-tenancy/lib/models/mongodb/Tenant'),
+  }
+});
+```
+
+`Schema.js`
+
+```js
+const generate_id = require('mongoose').Types;
+
+module.exports = new mongoose.Schema({
+  _id: generate_id.ObjectId,
+  type: String,
+  meta_data: JSON,
+  created_at: {type: Number, default: Math.floor(Date.now() / 1000)},
+  last_push_sent: {type: Number, default: 1}
+});
+```
+
 We made useful config obj to make it easier to access some values.
 Ex:
 
@@ -123,10 +159,30 @@ const tenancy_config = {
   "connection": "tenant", // central in case of central connection
   "queue_connection": "", // null by default
   "tenant_id": "example",
+  "tenant_connection": "db connection object",
+  "central_connection": "db connection object",
 }
 
 //add more if needed
 config.setConfig({
   "test": "new"
+});
+```
+
+#### 4. Tenant Model
+
+there is ready to use tenant model if you do not want to customize it.
+you can just register the model to mongoose by putting this line inside `index.js`:
+`const Tenant = require('node-tenancy/lib/models/mongodb/Tenant');`
+
+#### 5. Using App Models
+
+We tried to make easy to access specific connection model
+
+```js
+const tenancy = require('node-tenancy');
+
+tenancy.db.getModel('Notification').countDocuments().then(result => {
+  console.log(result);
 });
 ```
