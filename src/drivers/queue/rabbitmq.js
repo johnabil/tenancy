@@ -1,4 +1,4 @@
-const Config = require('../../helpers/config');
+const Config = require('../../utils/config');
 const RabbitMQ = require('amqplib/callback_api');
 
 

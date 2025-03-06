@@ -1,7 +1,7 @@
-const tenantModel = require('../helpers/tenantModel');
-const DatabaseDriver = require('../helpers/db');
-const QueueDriver = require('../helpers/queue');
-const Config = require('../helpers/config');
+const tenantModel = require('../utils/tenantModel');
+const DatabaseDriver = require('../utils/db');
+const QueueDriver = require('../utils/queue');
+const Config = require('../utils/config');
 
 module.exports = function (Request, Response, Next) {
   const domain = Request.hostname;

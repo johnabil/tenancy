@@ -1,13 +1,10 @@
 require('dotenv').config();
 
-const db = require('./lib/helpers/db');
-const config = require('./lib/helpers/config');
-const queue = require('./lib/helpers/queue');
+const db = require('./src/utils/db');
+const config = require('./src/utils/config');
+const queue = require('./src/utils/queue');
+const initializeTenancyMiddleware = require('./src/middlewares/InitializeTenancy');
+const initializeCentralMiddleware = require('./src/middlewares/InitializeCentralConnection');
+const TenantSchema = db.getDefaultTenantSchema();
 
-module.exports = {
-  'initializeTenancyMiddleware': require('./lib/middlewares/InitializeTenancy'),
-  'initializeCentralMiddleware': require('./lib/middlewares/InitializeCentralConnection'),
-  'db': db,
-  'config': config,
-  'queue': queue,
-}
+module.exports = {db, config, queue, initializeCentralMiddleware, initializeTenancyMiddleware, TenantSchema};

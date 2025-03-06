@@ -1,6 +1,6 @@
-const DatabaseDriver = require('../helpers/db');
-const QueueDriver = require('../helpers/queue');
-const Config = require('../helpers/config');
+const DatabaseDriver = require('../utils/db');
+const QueueDriver = require('../utils/queue');
+const Config = require('../utils/config');
 
 module.exports = function (Request, Response, Next) {
   const central_domains = Config.getConfig().central_domains;

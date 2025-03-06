@@ -1,14 +1,10 @@
 const mongoose = require('mongoose');
-const tenant_model_names = ['Tenant', 'tenant'];
-const db = require('../../helpers/db');
-const config = require('../../helpers/config');
-const Config = require("node-tenancy/lib/helpers/config");
-const DatabaseDriver = require("node-tenancy/lib/helpers/db");
-const generate_id = require('mongoose').Types;
+const Config = require('../../utils/config');
+const DatabaseDriver = require('../../utils/db');
 
 function getTenantModel(domain) {
   let model = null;
-  const connection = db.resolveCentralConnection();
+  const connection = DatabaseDriver.resolveCentralConnection();
 
   if (!connection) {
     throw new Error(`No database connections found`);
@@ -44,16 +40,20 @@ function disconnect() {
 }
 
 function getModel(model_name) {
-  let connection_name = config.getConfig()?.connection;
+  let connection_name = Config.getConfig()?.connection;
 
   switch (connection_name) {
     case 'tenant':
-      return config.getConfig()?.tenant_connection.model(model_name);
+      return Config.getConfig()?.tenant_connection.model(model_name);
     case'central':
-      return config.getConfig()?.central_connection.model(model_name);
+      return Config.getConfig()?.central_connection.model(model_name);
     default:
       throw new Error(`No database connections found.`);
   }
 }
 
-module.exports = {getTenantModel, connect, disconnect, registerSchemas, getModel};
+function getDefaultTenantSchema() {
+  return require('../../schemas/mongodb/Tenant');
+}
+
+module.exports = {getTenantModel, connect, disconnect, registerSchemas, getModel, getDefaultTenantSchema};

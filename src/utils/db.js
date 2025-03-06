@@ -1,5 +1,5 @@
 function getDriverClass() {
-  let driver_name = process.env.DB_DRIVER;
+  const driver_name = process.env.DB_DRIVER;
   if (driver_name == null) {
     throw new Error(`DB_DRIVER undefined environment variable`);
   }
@@ -13,7 +13,7 @@ function getDriverClass() {
 }
 
 function resolveTenantConnection(connection, db_name, options = {}) {
-  let Driver = this.getDriverClass();
+  const Driver = getDriverClass();
 
   try {
     const db_connection = Driver.connect(connection, options);
@@ -24,9 +24,9 @@ function resolveTenantConnection(connection, db_name, options = {}) {
 }
 
 function resolveCentralConnection(options = {}) {
-  let Driver = this.getDriverClass();
-  let connection = process.env.DB_CONNECTION || process.env.DB_HOST;
-  let db_name = process.env.DB_NAME;
+  const Driver = getDriverClass();
+  const connection = process.env.DB_CONNECTION || process.env.DB_HOST;
+  const db_name = process.env.DB_NAME;
 
   try {
     const db_connection = Driver.connect(connection, options);
@@ -37,13 +37,25 @@ function resolveCentralConnection(options = {}) {
 }
 
 function registerSchemas(connection, schemas) {
-  let Driver = this.getDriverClass();
+  const Driver = getDriverClass();
 
   Driver.registerSchemas(connection, schemas);
 }
 
 function getModel(model_name) {
-  return this.getDriverClass().getModel(model_name);
+  return getDriverClass().getModel(model_name);
 }
 
-module.exports = {getDriverClass, resolveTenantConnection, resolveCentralConnection, registerSchemas, getModel};
+function getDefaultTenantSchema() {
+  const Driver = getDriverClass();
+  return Driver.getDefaultTenantSchema();
+}
+
+module.exports = {
+  getDriverClass,
+  resolveTenantConnection,
+  resolveCentralConnection,
+  registerSchemas,
+  getModel,
+  getDefaultTenantSchema
+};

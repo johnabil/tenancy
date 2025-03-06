@@ -12,8 +12,7 @@ Trying to make it like [Tenancy for Laravel](https://tenancyforlaravel.com)
         - [Middleware](#1-middlewares)
         - [Queue](#2-queue-connection)
         - [Config](#3-config-obj)
-        - [Tenant Model](#4-tenant-model)
-        - [Models](#5-using-app-models)
+        - [Models](#4-using-app-models)
 
 ## Support
 
@@ -129,7 +128,7 @@ config.setConfig({
     "Model": require('Schema')
   },
   "central_schemas": {
-    'Tenant': require('node-tenancy/lib/models/mongodb/Tenant'),
+    'Tenant': tenancy.TenantSchema,
   }
 });
 ```
@@ -169,13 +168,7 @@ config.setConfig({
 });
 ```
 
-#### 4. Tenant Model
-
-there is ready to use tenant model if you do not want to customize it.
-you can just register the model to mongoose by putting this line inside `index.js`:
-`const Tenant = require('node-tenancy/lib/models/mongodb/Tenant');`
-
-#### 5. Using App Models
+#### 4. Using App Models
 
 We tried to make easy to access specific connection model
 
