@@ -1,5 +1,5 @@
 const Config = require('../../utils/config');
-const RabbitMQ = require('amqplib/callback_api');
+const RabbitMQ = require('amqplib');
 
 
 function getConnectionUrl() {
@@ -15,9 +15,9 @@ function getConnectionUrl() {
   }
 }
 
-function connect(url, callback, options = {}) {
+async function connect(url, options = {}) {
   try {
-    RabbitMQ.connect(url, options, callback);
+    return await RabbitMQ.connect(url, options);
   } catch (error) {
     throw error;
   }

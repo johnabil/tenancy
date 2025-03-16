@@ -11,8 +11,8 @@ function getConnectionUrl() {
   }
 }
 
-function connect(url, callback, options = {}) {
-  RabbitmqDriver.connect(url, options, callback);
+async function connect(url, options = {}) {
+  return await RabbitmqDriver.connect(url, options);
 }
 
 module.exports = {getConnectionUrl, connect};
