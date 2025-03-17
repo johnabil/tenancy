@@ -11,7 +11,19 @@
   "scripts": {
     "test": "jest --detectOpenHandles"
   },
-  "keywords": [],
+  "keywords": [
+    "nodejs",
+    "node.js",
+    "saas",
+    "mongoose",
+    "mongodb",
+    "multi-tenant",
+    "tenancy",
+    "database",
+    "backend",
+    "rabbitmq",
+    "queue"
+  ],
   "author": "John Nabil",
   "license": "ISC",
   "dependencies": {
