@@ -11,8 +11,10 @@
   "scripts": {
     "test": "jest --detectOpenHandles"
   },
+  "bin": {
+    "tenancy-db": "bin/db.js"
+  },
   "keywords": [
-    "nodejs",
     "node.js",
     "saas",
     "mongoose",
@@ -20,17 +22,20 @@
     "multi-tenant",
     "tenancy",
     "database",
-    "backend",
-    "rabbitmq",
-    "queue"
+    "sql",
+    "sequelize",
+    "rabbitmq"
   ],
   "author": "John Nabil",
   "license": "ISC",
   "dependencies": {
     "amqplib": "^0.10.5",
+    "commander": "^13.1.0",
     "dotenv": "^16.4.7",
     "mongodb": "^6.13.1",
-    "mongoose": "^8.10.1"
+    "mongoose": "^8.10.1",
+    "sequelize": "^6.37.6",
+    "sequelize-cli": "^6.6.2"
   },
   "devDependencies": {
     "@babel/core": "^7.26.9",
