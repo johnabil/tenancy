@@ -7,6 +7,15 @@ function getDriverClass() {
   switch (driver_name) {
     case 'mongodb':
       return require('../drivers/database/MongoDriver');
+    case 'mysql' :
+    case 'postgres' :
+    case 'sqlite' :
+    case 'mariadb' :
+    case 'mssql' :
+    case 'db2' :
+    case 'snowflake' :
+    case 'oracle':
+      return require('../drivers/database/SqlDriver');
     default:
       throw new Error(`Unknown driver: ${driver_name}`);
   }
@@ -16,8 +25,7 @@ function resolveTenantConnection(connection, db_name, options = {}) {
   const Driver = getDriverClass();
 
   try {
-    const db_connection = Driver.connect(connection, options);
-    return db_connection.useDb(db_name, {useCache: true});
+    return Driver.connect(connection, db_name, options);
   } catch (err) {
     throw err;
   }
@@ -29,8 +37,7 @@ function resolveCentralConnection(options = {}) {
   const db_name = process.env.DB_NAME;
 
   try {
-    const db_connection = Driver.connect(connection, options);
-    return db_connection.useDb(db_name, {useCache: true});
+    return Driver.connect(connection, db_name, options);
   } catch (err) {
     throw err;
   }

@@ -10,13 +10,9 @@ module.exports = function (Request, Response, Next) {
     //db connection
     const db_options = Config.getConfig().db_options;
     const connection = DatabaseDriver.resolveCentralConnection(db_options);
+    // register schemas
     const central_schemas = Config.getConfig()?.central_schemas;
-
-    if (central_schemas) {
-      DatabaseDriver.registerSchemas(connection, central_schemas);
-    } else {
-      throw new Error('No provided schemas found.');
-    }
+    DatabaseDriver.registerSchemas(connection, central_schemas);
 
     //resolving config
     Config.setConfig({
