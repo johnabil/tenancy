@@ -55,8 +55,8 @@ module.exports = (sequelize) => {
     }
   }, {
     sequelize,
-    modelName: 'Domain',
-    tableName: 'domains',
+    modelName: 'Tenant',
+    tableName: 'tenants',
     timestamps: false,
   });
 

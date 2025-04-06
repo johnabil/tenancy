@@ -67,7 +67,6 @@ function connect(connection, db_name, options = {}) {
 
 function getModel(model_name) {
   let connection_name = Config.getConfig()?.connection;
-  ``
   switch (connection_name) {
     case 'tenant':
       return Config.getConfig()?.tenant_connection?.models[model_name];
