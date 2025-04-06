@@ -38,12 +38,19 @@ $ npm install --save oracledb # Oracle Database
 
 ```js
 const {TenantSchema, DomainSchema} = require('node-tenancy');
+const UserSchema = require('user.js');
 
 
 config.setConfig({
-  "model_definers": [
+  "central_domains": [
+    "test"
+  ],
+  "central_schemas": [
     TenantSchema,
     DomainSchema
+  ],
+  "tenant_schemas": [
+    UserSchema
   ]
 });
 ```

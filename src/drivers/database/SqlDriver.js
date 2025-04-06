@@ -32,27 +32,21 @@ function getTenantModel(domain) {
 }
 
 function registerSchemas(connection, schemas = {}) {
-  const modelDefiners = Config.getConfig()?.model_definers;
-
-  if (modelDefiners.length > 0) {
-    try {
-      //defining models
-      for (const modelDefiner of modelDefiners) {
-        modelDefiner(connection);
-      }
-
-      //applying associations
-      for (const model_name in connection.models) {
-        const model = connection.models[model_name];
-        if (model?.associate) {
-          model.associate(connection.models);
-        }
-      }
-    } catch (error) {
-      throw error;
+  try {
+    //defining models
+    for (const modelDefiner of schemas) {
+      modelDefiner(connection);
     }
-  } else {
-    throw new Error('No provided models found.');
+
+    //applying associations
+    for (const model_name in connection.models) {
+      const model = connection.models[model_name];
+      if (model?.associate) {
+        model.associate(connection.models);
+      }
+    }
+  } catch (error) {
+    throw error;
   }
 }
 
