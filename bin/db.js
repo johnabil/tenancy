@@ -17,14 +17,16 @@ program.name("tenancy-db")
 program
   .command("migrate")
   .description("Apply migrations to tenants")
-  .option('--path', 'provide custom migration path (default /app/migrations/tenants)')
+  .option('--path <path>', 'provide custom migration path (default migrations/tenants)')
   .option('-t, --tenants <array>', 'tenants array ids')
   .action((options) => {
     try {
       let tenants;
       const migrations_path = options.path ? path.resolve(options.path) : default_migrations_path;
 
-      if (options.tenants.length > 0) {
+      if (options?.tenants?.length > 0) {
+        options.tenants = options.tenants.split(/\s*,\s*/);
+
         tenants = connection.query('select * from tenants where id in (:tenant_ids)', {
           replacements: {tenant_ids: options.tenants},
           type: QueryTypes.SELECT
@@ -37,17 +39,25 @@ program
 
       tenants.then(tenants => {
         tenants.forEach(tenant => {
-          console.log(`Migrating Tenant -- ${tenant.id} \n`);
-
           const db_url = `${tenant.db_connection}${tenant.db_name}`
-          const process = spawn("sequelize db:migrate", [`--url ${db_url}`, `--migrations-path ${migrations_path}`]);
+          const args = [`db:migrate`, `--url`, `'${db_url}'`, `--migrations-path`, `'${migrations_path}'`];
+          const command = spawn("sequelize", args);
 
-          process.stdout.on("data", (data) => {
-            console.log(`Output: ${data}`);
+          command.stdout.on("data", (data) => {
+            console.log(`${data}`);
           });
 
-          process.stderr.on("data", (data) => {
-            console.error(`Error: ${data}`);
+          command.stderr.on("data", (data) => {
+            console.error(`${data}`);
+            process.exit(1);
+          });
+
+          command.on('close', (code) => {
+            if (code === 0) {
+              process.exit(0);
+            } else {
+              process.exit(code);
+            }
           });
         });
       });
@@ -61,14 +71,16 @@ program
 program
   .command("migrate:rollback")
   .description("Rollback latest migration")
-  .option('--path', 'provide custom migration path (default /app/migrations/tenants)')
+  .option('--path <path>', 'provide custom migration path (default migrations/tenants)')
   .option('-t, --tenants <array>', 'tenants array ids')
   .action((options) => {
     try {
       let tenants;
       const migrations_path = options.path ? path.resolve(options.path) : default_migrations_path;
 
-      if (options.tenants.length > 0) {
+      if (options?.tenants?.length > 0) {
+        options.tenants = options.tenants.split(/\s*,\s*/);
+
         tenants = connection.query('select * from tenants where id in (:tenant_ids)', {
           replacements: {tenant_ids: options.tenants},
           type: QueryTypes.SELECT
@@ -81,17 +93,25 @@ program
 
       tenants.then(tenants => {
         tenants.forEach(tenant => {
-          console.log(`Rolling back Tenant -- ${tenant.id} \n`);
-
           const db_url = `${tenant.db_connection}${tenant.db_name}`
-          const process = spawn("sequelize db:migrate:undo", [`--url ${db_url}`, `--migrations-path ${migrations_path}`]);
+          const args = [`db:migrate:undo`, `--url`, `'${db_url}'`, `--migrations-path`, `'${migrations_path}'`];
+          const command = spawn("sequelize", args);
 
-          process.stdout.on("data", (data) => {
-            console.log(`Output: ${data}`);
+          command.stdout.on("data", (data) => {
+            console.log(`${data}`);
           });
 
-          process.stderr.on("data", (data) => {
+          command.stderr.on("data", (data) => {
             console.error(`Error: ${data}`);
+            process.exit(1);
+          });
+
+          command.on('close', (code) => {
+            if (code === 0) {
+              process.exit(0);
+            } else {
+              process.exit(code);
+            }
           });
         });
       });
@@ -105,14 +125,16 @@ program
 program
   .command("migrate:fresh")
   .description("Rollback all migrations")
-  .option('--path', 'provide custom migration path (default /app/migrations/tenants)')
+  .option('--path <path>', 'provide custom migration path (default migrations/tenants)')
   .option('-t, --tenants <array>', 'tenants array ids')
   .action((options) => {
     try {
       let tenants;
       const migrations_path = options.path ? path.resolve(options.path) : default_migrations_path;
 
-      if (options.tenants.length > 0) {
+      if (options?.tenants?.length > 0) {
+        options.tenants = options.tenants.split(/\s*,\s*/);
+
         tenants = connection.query('select * from tenants where id in (:tenant_ids)', {
           replacements: {tenant_ids: options.tenants},
           type: QueryTypes.SELECT
@@ -125,17 +147,25 @@ program
 
       tenants.then(tenants => {
         tenants.forEach(tenant => {
-          console.log(`Rolling back Tenant -- ${tenant.id} \n`);
-
           const db_url = `${tenant.db_connection}${tenant.db_name}`
-          const process = spawn("sequelize db:migrate:undo:all", [`--url ${db_url}`, `--migrations-path ${migrations_path}`]);
+          const args = [`db:migrate:undo:all`, `--url`, `'${db_url}'`, `--migrations-path`, `'${migrations_path}'`];
+          const command = spawn("sequelize", args);
 
-          process.stdout.on("data", (data) => {
-            console.log(`Output: ${data}`);
+          command.stdout.on("data", (data) => {
+            console.log(`${data}`);
           });
 
-          process.stderr.on("data", (data) => {
+          command.stderr.on("data", (data) => {
             console.error(`Error: ${data}`);
+            process.exit(1);
+          });
+
+          command.on('close', (code) => {
+            if (code === 0) {
+              process.exit(0);
+            } else {
+              process.exit(code);
+            }
           });
         });
       });

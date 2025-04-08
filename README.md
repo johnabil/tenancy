@@ -20,6 +20,8 @@ Trying to make it like [Tenancy for Laravel](https://tenancyforlaravel.com)
 |-------------------------------------------------------------|-----------------|
 | mongodb                                                     | 6.13.1 or later |
 | mongoose                                                    | 8.10.1 or later |
+| sequelize                                                   | 6.37 or later   |
+| sequelize-cli                                               | 6.6 or later    |
 | Rabbitmq ([amqplib](https://www.npmjs.com/package/amqplib)) | 0.10.5 or later |
 
 ## Install
@@ -188,3 +190,14 @@ in detail mongoose implementation.
 To make it more versatile we have added
 sequelize which supports multiple relational databases.
 Read more about it here [Sequelize guide](docs/SQL.md).
+
+#### Column names can not be changed:
+
+##### Tenant table/collection:
+
+`db_connection, db_name, db_options`
+
+##### Domain table: `domain`
+
+**In case you are using mongodb we assume that domains is an array inside
+tenants collection**

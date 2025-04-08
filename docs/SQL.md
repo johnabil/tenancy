@@ -165,4 +165,14 @@ Options:
   --path            Provide custom migrations path (default is /migrations/tenants)
 ```
 
+Examples:
+
+```bash
+tenancy-db migrate --path 'migrations/tenant'
+```
+
+```bash
+tenancy-db migrate --tenants id1,id2
+```
+
 **We use sequelize CLI for central related migrations and models**
