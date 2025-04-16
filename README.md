@@ -11,8 +11,8 @@ Trying to make it like [Tenancy for Laravel](https://tenancyforlaravel.com)
     - [Implementation](#implementation)
         - [Middleware](#1-middlewares)
         - [Queue](#2-queue-connection)
-        - [Config](#3-config-obj)
-        - [Models](#4-using-app-models)
+        - [Mongoose Usage](#3-using-mongoose)
+        - [Sql Usage](#4-using-sql-with-sequelize)
 
 ## Support
 
@@ -20,6 +20,8 @@ Trying to make it like [Tenancy for Laravel](https://tenancyforlaravel.com)
 |-------------------------------------------------------------|-----------------|
 | mongodb                                                     | 6.13.1 or later |
 | mongoose                                                    | 8.10.1 or later |
+| sequelize                                                   | 6.37 or later   |
+| sequelize-cli                                               | 6.6 or later    |
 | Rabbitmq ([amqplib](https://www.npmjs.com/package/amqplib)) | 0.10.5 or later |
 
 ## Install
@@ -178,70 +180,24 @@ module.exports = {getMessages, publishMessage};
 
 #### **Just be careful to provide close connection in the callback function if needed.**
 
-#### 3. Config obj
+#### 3. Using Mongoose
 
-**Make sure to add those values before using middlewares.**
+Please read [Mongoose guide](docs/MONGO.md) to know
+in detail mongoose implementation.
 
-```js
-const {config} = require('node-tenancy');
+#### 4. Using Sql (with sequelize)
 
+To make it more versatile we have added
+sequelize which supports multiple relational databases.
+Read more about it here [Sequelize guide](docs/SQL.md).
 
-config.setConfig({
-  "central_domains": [
-    "test"
-  ],
-  "tenant_schemas": {
-    "Model": require('Schema')
-  },
-  "central_schemas": {
-    'Tenant': tenancy.TenantSchema,
-  }
-});
-```
+#### Column names can not be changed:
 
-`Schema.js`
+##### Tenant table/collection:
 
-```js
-const generate_id = require('mongoose').Types;
+`db_connection, db_name, db_options`
 
-module.exports = new mongoose.Schema({
-  _id: generate_id.ObjectId,
-  type: String,
-  meta_data: JSON,
-  created_at: {type: Number, default: Math.floor(Date.now() / 1000)},
-  last_push_sent: {type: Number, default: 1}
-});
-```
+##### Domain table: `domain`
 
-We made useful config obj to make it easier to access some values.
-Ex:
-
-```js
-const {config} = require('node-tenancy');
-
-//values exists
-const tenancy_config = {
-  "connection": "tenant", // central in case of central connection
-  "queue_connection": "", // null by default
-  "tenant_id": "example",
-  "tenant_connection": "db connection object",
-  "central_connection": "db connection object",
-}
-
-//add more if needed
-config.setConfig({
-  "test": "new"
-});
-```
-
-#### 4. Using App Models
-
-We tried to make easy to access specific connection model
-
-```js
-const tenancy = require('node-tenancy');
-
-tenancy.db.getModel('Notification').countDocuments().then(result => {
-  console.log(result);
-});
-```
+**In case you are using mongodb we assume that domains is an array inside
+tenants collection**

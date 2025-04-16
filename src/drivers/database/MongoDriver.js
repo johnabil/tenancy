@@ -24,13 +24,22 @@ function getTenantModel(domain) {
 }
 
 function registerSchemas(connection, schemas = {}) {
-  for (const model_name in schemas) {
-    connection.model(model_name, schemas[model_name]);
+  if (Object.keys(schemas).length > 0) {
+    try {
+      for (const model_name in schemas) {
+        connection.model(model_name, schemas[model_name]);
+      }
+    } catch (error) {
+      throw error;
+    }
+  } else {
+    throw new Error('No provided schemas found.');
   }
 }
 
-function connect(connection, options = {}) {
-  return mongoose.createConnection(connection, options);
+function connect(connection, db_name, options = {}) {
+  const db_connection = mongoose.createConnection(connection, options);
+  return db_connection.useDb(db_name, {useCache: true});
 }
 
 function disconnect() {

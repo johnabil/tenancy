@@ -15,16 +15,12 @@ module.exports = function (Request, Response, Next) {
       const connection = DatabaseDriver.resolveTenantConnection(tenant.db_connection, tenant.db_name, tenant.db_options);
       //register schemas
       let tenant_schemas = Config.getConfig()?.tenant_schemas;
-      if (tenant_schemas) {
-        DatabaseDriver.registerSchemas(connection, tenant_schemas);
-      } else {
-        throw new Error('No provided schemas found.');
-      }
+      DatabaseDriver.registerSchemas(connection, tenant_schemas);
 
       //resolving config
       Config.setConfig({
         "connection": "tenant",
-        "tenant_id": tenant._id,
+        "tenant_id": tenant._id || tenant.id,
         "queue_connection": QueueDriver.getConnectionUrl(),
         "tenant_connection": connection,
       });
