@@ -148,7 +148,7 @@ all tenants or for a specific tenant.
 
 First, you can use sequelize CLI to create tenant migration files with
 providing `--migration-path` option and provide your tenants migration
-path and you can use `/migrations/tenants`
+path, and you can use `/migrations/tenants`
 as it's the default path the package is using.
 
 ```bash
