@@ -5,8 +5,8 @@ Here you will find a provided example of how to use RabbitMQ.
 ```dotenv
 #env variables that must exists
 QUEUE_DRIVER=rabbitmq
-QUEUE_CONNECTION=amqp://test:test@127.0.0.1
-QUEUE_TENANT_CONNECTION=amqp://tenant:tenant@127.0.0.1
+QUEUE_CONNECTION=
+QUEUE_TENANT_CONNECTION=
 ```
 
 `app.js`

@@ -5,8 +5,8 @@ Example of Pub-Sub with Redis:
 ```dotenv
 #env variables that must exists
 QUEUE_DRIVER=redis
-QUEUE_CONNECTION=redis://test:test@redis.test
-QUEUE_TENANT_CONNECTION=redis://tenant:tenant@redis.test
+QUEUE_CONNECTION=
+QUEUE_TENANT_CONNECTION=
 ```
 
 ```js
@@ -43,7 +43,7 @@ async function getMessages(channel_name, is_tenant_connection = false) {
     console.log(message);
   }, true);
 
-  await client.close();
+  await client.quit();
 }
 
 async function publishMessage(channel_name, message, is_tenant_connection = false) {
@@ -53,7 +53,7 @@ async function publishMessage(channel_name, message, is_tenant_connection = fals
   const client = await queue.connect();
   await client.publish(channel_name, JSON.stringify(message));
   setTimeout(function () {
-    client.close();
+    client.quit();
   }, 500);
 }
 

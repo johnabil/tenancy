@@ -1,4 +1,4 @@
-const Config = require('config');
+const Config = require('../utils/config');
 
 function getDriverClass() {
   let driver = process.env.QUEUE_DRIVER;
