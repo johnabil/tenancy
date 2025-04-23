@@ -15,7 +15,7 @@ function setConnectionConfig(is_tenant_connection) {
 async function getMessages(queue_name, is_tenant_connection = false) {
   setConnectionConfig(is_tenant_connection);
 
-  const conn = await queue.connect(queue.getConnectionUrl());
+  const conn = await queue.connect();
   const channel = await conn.createChannel();
 
   await channel.assertQueue(queue_name);
@@ -35,7 +35,7 @@ async function getMessages(queue_name, is_tenant_connection = false) {
 async function publishMessage(queue_name, message, is_tenant_connection = false) {
   setConnectionConfig(is_tenant_connection);
 
-  const conn = await queue.connect(queue.getConnectionUrl());
+  const conn = await queue.connect();
   const channel = await conn.createChannel();
   channel.sendToQueue(queue_name, Buffer.from(JSON.stringify(message)));
   setTimeout(function () {

@@ -13,7 +13,10 @@
 
 ### Enhancements
 
-- Improving `queue.connect(url = null, options = {})` method. but you can still use it as before.
+- Improving `queue.connect(url = null, options = {})` method.
+  but you can still use it as before.
+- Adding github actions for running `npm test`.
+- Improve queue test cases.
 
 ```js
 const {queue, config} = require('node-tenancy');
