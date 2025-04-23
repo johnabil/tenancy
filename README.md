@@ -13,6 +13,7 @@ Trying to make it like [Tenancy for Laravel](https://tenancyforlaravel.com)
         - [Queue](#2-queue-connection)
         - [Mongoose Usage](#3-using-mongoose)
         - [Sql Usage](#4-using-sql-with-sequelize)
+- [CHANGELOG](CHANGELOG.md) (for latest updates and changes)
 
 ## Support
 

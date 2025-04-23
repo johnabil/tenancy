@@ -2,12 +2,19 @@
 
 Here you will find a provided example of how to use RabbitMQ.
 
+```dotenv
+#env variables that must exists
+QUEUE_DRIVER=rabbitmq
+QUEUE_CONNECTION=amqp://test:test@127.0.0.1
+QUEUE_TENANT_CONNECTION=amqp://tenant:tenant@127.0.0.1
+```
+
 `app.js`
 
 ```js
 const queueClass = require('queue');
-queueClass.getMessages('support_test', true);
-queueClass.publishMessage('support_test', {'message': 'test'}, true);
+queueClass.getMessages('test', true);
+queueClass.publishMessage('test', {'message': 'test'}, true);
 ```
 
 `queue.js`
@@ -15,6 +22,7 @@ queueClass.publishMessage('support_test', {'message': 'test'}, true);
 ```js
 const {queue, config} = require('node-tenancy');
 
+//connection must be set if you are not using middleware
 function setConnectionConfig(is_tenant_connection) {
   if (is_tenant_connection) {
     config.setConfig({
@@ -30,7 +38,8 @@ function setConnectionConfig(is_tenant_connection) {
 async function getMessages(queue_name, is_tenant_connection = false) {
   setConnectionConfig(is_tenant_connection);
 
-  const conn = await queue.connect(queue.getConnectionUrl());
+  // queue.connect(url = null, options = {})
+  const conn = await queue.connect();
   const channel = await conn.createChannel();
 
   await channel.assertQueue(queue_name);
@@ -50,7 +59,8 @@ async function getMessages(queue_name, is_tenant_connection = false) {
 async function publishMessage(queue_name, message, is_tenant_connection = false) {
   setConnectionConfig(is_tenant_connection);
 
-  const conn = await queue.connect(queue.getConnectionUrl());
+  // queue.connect(url = null, options = {})
+  const conn = await queue.connect();
   const channel = await conn.createChannel();
   channel.sendToQueue(queue_name, Buffer.from(JSON.stringify(message)));
   setTimeout(function () {

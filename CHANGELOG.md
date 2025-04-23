@@ -1,5 +1,33 @@
 # Changelog
 
+## v1.2.1 - 23 Apr, 2025
+
+### Features
+
+- Adding Redis support.
+
+### Breaking Changes
+
+- Queue connection env values must be `QUEUE_CONNECTION` & `QUEUE_TENANT_CONNECTION`
+  instead of `RABBITMQ_CONNECTION` & `RABBITMQ_TENANT_CONNECTION`.
+
+### Enhancements
+
+- Improving `queue.connect(url = null, options = {})` method. but you can still use it as before.
+
+```js
+const {queue, config} = require('node-tenancy');
+
+//old way
+const connection = await queue.connect(queue.getConnectionUrl()); //old way
+//new way
+const connection = await queue.connect(); //new way
+//new way with custom url connection
+const connection = await queue.connect('redis://test:test@redis.test');
+```
+
+---
+
 ## v1.2.0 - 16 Apr, 2025
 
 ### Features
