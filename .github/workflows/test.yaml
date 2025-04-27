@@ -28,6 +28,7 @@ jobs:
       - name: Installing Dependencies
         run: npm i
       - name: Debug env
-        run: | echo "MY_VAR = $DB_DRIVER"
+        run: |
+          echo "NODE_ENV=$DB_DRIVER"
       - name: Run Tests
         run: npm test
