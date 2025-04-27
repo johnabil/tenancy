@@ -8,13 +8,14 @@ on:
     branches: [ "**" ]
   pull_request:
     branches: [ "**" ]
-  env:
-    DB_DRIVER: postgres
-    DB_CONNECTION: ${{secrets.DB_CONNECTION}}
-    DB_NAME: tenancy
-    QUEUE_DRIVER: ${{env.QUEUE_DRIVER}}
-    QUEUE_CONNECTION: ${{env.QUEUE_CONNECTION}}
-    QUEUE_TENANT_CONNECTION: ${{env.QUEUE_TENANT_CONNECTION}}
+
+env:
+  DB_DRIVER: postgres
+  DB_CONNECTION: ${{secrets.DB_CONNECTION}}
+  DB_NAME: tenancy
+  QUEUE_DRIVER: ${{env.QUEUE_DRIVER}}
+  QUEUE_CONNECTION: ${{env.QUEUE_CONNECTION}}
+  QUEUE_TENANT_CONNECTION: ${{env.QUEUE_TENANT_CONNECTION}}
 
 jobs:
   test:
