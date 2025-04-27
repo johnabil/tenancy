@@ -1,0 +1,87 @@
+# This workflow will do a clean installation of node dependencies and run npm test.
+
+name: Test Workflow
+
+on:
+  push:
+    branches: [ "**" ]
+  pull_request:
+    branches: [ "**" ]
+
+env:
+  DB_DRIVER: postgres
+  DB_CONNECTION: postgres://postgres:123456789@localhost:5432/
+  DB_NAME: tenancy
+  QUEUE_DRIVER: rabbitmq
+  QUEUE_CONNECTION: ${{secrets.QUEUE_CONNECTION}}
+  QUEUE_TENANT_CONNECTION: ${{secrets.QUEUE_TENANT_CONNECTION}}
+  RQUEUE_CONNECTION: ${{secrets.RQUEUE_CONNECTION}}
+  RQUEUE_TENANT_CONNECTION: ${{secrets.RQUEUE_TENANT_CONNECTION}}
+  SQUEUE_CONNECTION: ${{secrets.SQUEUE_CONNECTION}}
+  SQUEUE_TENANT_CONNECTION: ${{secrets.SQUEUE_TENANT_CONNECTION}}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:14
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: 123456789
+          POSTGRES_DB: tenancy
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+      mongodb:
+        image: mongo:6
+        ports:
+          - 27017:27017
+        options: >-
+          --health-cmd "mongosh --eval 'db.adminCommand(\"ping\")'"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+      redis:
+        image: redis
+        ports:
+          - 6379:6379
+
+      rabbitmq:
+        image: rabbitmq:3-management
+        ports:
+          - 5672:5672   # RabbitMQ main connection port (AMQP)
+          - 15672:15672 # RabbitMQ Management UI port
+        options: >-
+          --health-cmd "rabbitmq-diagnostics check_port_connectivity"
+          --health-interval 10s
+          --health-timeout 10s
+          --health-retries 5
+
+    strategy:
+      matrix:
+        node-version: [ 20.x, 22.x ]
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - name: Installing Dependencies
+        run: npm i
+      - name: Run Tests
+        run: npm test
+      - name: Run Mongo Tests
+        env:
+          DB_DRIVER: mongodb
+          DB_CONNECTION: mongodb://127.0.0.1:27017/
+        run: npm test tests/db.test.js

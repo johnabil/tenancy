@@ -34,7 +34,8 @@ config.setConfig({
 });
 
 /* ---------------------Queue Sender and Receiver---------------------- */
-// const queueClass = require('./app/jobs/queue');
+// const queueClass = require('./app/jobs/rabbitmq');
+// const queueClass = require('./app/jobs/redis');
 // queueClass.getMessages('support_test', true);
 // queueClass.publishMessage('support_test', {'message': 'test'}, true);
 

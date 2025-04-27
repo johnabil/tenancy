@@ -1,3 +1,5 @@
+require('dotenv').config({override: true});
+
 const {config, queue} = require('../index');
 
 test('Queue central connection', () => {
@@ -24,18 +26,20 @@ test('Queue tenant connection', () => {
   expect(mockFunction.mock.results[0].value).not.toBeNull();
 });
 
-describe('Queue connection', () => {
+describe('Rabbitmq connection', () => {
   config.setConfig({
     'connection': 'tenant',
   });
 
-  const connectionUrl = queue.getConnectionUrl();
   const channelQueue = 'test';
   let connection;
   let channel;
 
   beforeAll(async () => {
-    connection = await queue.connect(connectionUrl);
+    process.env.QUEUE_DRIVER = 'rabbitmq';
+    process.env.QUEUE_CONNECTION = process.env.RQUEUE_CONNECTION;
+    process.env.QUEUE_TENANT_CONNECTION = process.env.RQUEUE_TENANT_CONNECTION;
+    connection = await queue.connect();
     channel = await connection.createChannel();
 
     await channel.assertQueue(channelQueue, {
@@ -48,8 +52,35 @@ describe('Queue connection', () => {
     await connection.close();
   });
 
-  it('Queue connection callback', async () => {
+  it('Rabbitmq connection callback', async () => {
     expect(connection).not.toBeNull();
     expect(channel).not.toBeNull();
+  });
+});
+
+describe('Redis connection', () => {
+  config.setConfig({
+    'connection': 'tenant',
+  });
+
+  let connection;
+
+  beforeAll(async () => {
+    process.env.QUEUE_DRIVER = 'redis';
+    process.env.QUEUE_CONNECTION = process.env.SQUEUE_CONNECTION;
+    process.env.QUEUE_TENANT_CONNECTION = process.env.SQUEUE_TENANT_CONNECTION;
+    connection = await queue.connect();
+
+    await connection.subscribe('test', (message) => {
+      console.log(message);
+    });
+  });
+
+  afterAll(async () => {
+    await connection.quit();
+  });
+
+  it('Redis connection callback', async () => {
+    expect(connection).not.toBeNull();
   });
 });
