@@ -11,7 +11,7 @@ on:
 
 env:
   DB_DRIVER: postgres
-  DB_CONNECTION: ${{secrets.DB_CONNECTION}}
+  DB_CONNECTION: ${{secrets.PDB_CONNECTION}}
   DB_NAME: tenancy
   QUEUE_DRIVER: rabbitmq
   QUEUE_CONNECTION: ${{secrets.QUEUE_CONNECTION}}
@@ -68,7 +68,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [ 18.x, 20.x, 22.x ]
+        node-version: [ 20.x, 22.x ]
 
     steps:
       - uses: actions/checkout@v4
@@ -79,9 +79,6 @@ jobs:
           cache: 'npm'
       - name: Installing Dependencies
         run: npm i
-      - name: Debug env
-        run: |
-          echo "$DB_CONNECTION"
       - name: Run Tests
         run: npm test
       - name: Run Mongo Tests
