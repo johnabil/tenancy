@@ -13,9 +13,9 @@ env:
   DB_DRIVER: postgres
   DB_CONNECTION: ${{secrets.DB_CONNECTION}}
   DB_NAME: tenancy
-  QUEUE_DRIVER: ${{testing.QUEUE_DRIVER}}
-  QUEUE_CONNECTION: ${{testing.QUEUE_CONNECTION}}
-  QUEUE_TENANT_CONNECTION: ${{testing.QUEUE_TENANT_CONNECTION}}
+  QUEUE_DRIVER: redis
+  QUEUE_CONNECTION: ${{secrets.QUEUE_CONNECTION}}
+  QUEUE_TENANT_CONNECTION: ${{secrets.QUEUE_TENANT_CONNECTION}}
 
 jobs:
   test:
@@ -34,8 +34,5 @@ jobs:
           cache: 'npm'
       - name: Installing Dependencies
         run: npm i
-      - name: Debug env
-        run: |
-          echo "NODE_ENV=" ${{env.DB_DRIVER}}
       - name: Run Tests
         run: npm test
