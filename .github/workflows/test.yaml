@@ -11,7 +11,7 @@ on:
 
 env:
   DB_DRIVER: postgres
-  DB_CONNECTION: postgres://postgres:123456789@localhost:5432/
+  DB_CONNECTION: ${{secrets.PDB_CONNECTION}}
   DB_NAME: tenancy
   QUEUE_DRIVER: rabbitmq
   QUEUE_CONNECTION: ${{secrets.QUEUE_CONNECTION}}
