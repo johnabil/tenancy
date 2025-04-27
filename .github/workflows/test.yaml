@@ -81,8 +81,6 @@ jobs:
         run: npm i
       - name: Run Tests
         run: npm test
-        env:
-          DB_CONNECTION: ${{secrets.PDB_CONNECTION}}
       - name: Run Mongo Tests
         env:
           DB_DRIVER: mongodb
