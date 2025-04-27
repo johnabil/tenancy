@@ -80,8 +80,8 @@ jobs:
       - name: Installing Dependencies
         run: npm i
       - name: Debug env
-        run: | 
-          echo ${{secrets.DB_CONNECTION}}
+        run: |
+          echo "$DB_CONNECTION"
       - name: Run Tests
         run: npm test
       - name: Run Mongo Tests
