@@ -37,8 +37,8 @@ describe('Rabbitmq connection', () => {
 
   beforeAll(async () => {
     process.env.QUEUE_DRIVER = 'rabbitmq';
-    process.env.QUEUE_CONNECTION = process.env.rQUEUE_CONNECTION;
-    process.env.QUEUE_TENANT_CONNECTION = process.env.rQUEUE_TENANT_CONNECTION;
+    process.env.QUEUE_CONNECTION = process.env.RQUEUE_CONNECTION;
+    process.env.QUEUE_TENANT_CONNECTION = process.env.RQUEUE_TENANT_CONNECTION;
     connection = await queue.connect();
     channel = await connection.createChannel();
 
@@ -67,8 +67,8 @@ describe('Redis connection', () => {
 
   beforeAll(async () => {
     process.env.QUEUE_DRIVER = 'redis';
-    process.env.QUEUE_CONNECTION = process.env.sQUEUE_CONNECTION;
-    process.env.QUEUE_TENANT_CONNECTION = process.env.sQUEUE_TENANT_CONNECTION;
+    process.env.QUEUE_CONNECTION = process.env.SQUEUE_CONNECTION;
+    process.env.QUEUE_TENANT_CONNECTION = process.env.SQUEUE_TENANT_CONNECTION;
     connection = await queue.connect();
 
     await connection.subscribe('test', (message) => {
