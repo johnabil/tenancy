@@ -26,6 +26,10 @@ jobs:
         image: postgres:14
         ports:
           - 5432:5432
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: 123456789
+          POSTGRES_DB: tenancy
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
