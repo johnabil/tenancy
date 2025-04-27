@@ -12,7 +12,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    environment: testing
 
     strategy:
       matrix:
@@ -29,7 +28,7 @@ jobs:
         run: npm i
       - name: Debug env
         run: |
-          echo "NODE_ENV=" ${{env.DB_DRIVER}}
+          echo "NODE_ENV=" ${{secrets.DB_DRIVER}}
       - name: Run Tests
         env:
           DB_DRIVER: ${{env.DB_DRIVER}}
