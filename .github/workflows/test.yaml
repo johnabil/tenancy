@@ -27,5 +27,7 @@ jobs:
           cache: 'npm'
       - name: Installing Dependencies
         run: npm i
+      - name: Debug env
+        run: printenv
       - name: Run Tests
         run: npm test

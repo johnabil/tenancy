@@ -1,6 +1,6 @@
 # Changelog
 
-## v1.2.1 - 23 Apr, 2025
+## v1.2.1 - 27 Apr, 2025
 
 ### Features
 
