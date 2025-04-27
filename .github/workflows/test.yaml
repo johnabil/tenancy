@@ -11,7 +11,7 @@ on:
 
 env:
   DB_DRIVER: postgres
-  DB_CONNECTION: ${{secrets.PDB_CONNECTION}}
+  DB_CONNECTION: postgres://postgres:123456789@localhost:5432/
   DB_NAME: tenancy
   QUEUE_DRIVER: rabbitmq
   QUEUE_CONNECTION: ${{secrets.QUEUE_CONNECTION}}
@@ -84,5 +84,5 @@ jobs:
       - name: Run Mongo Tests
         env:
           DB_DRIVER: mongodb
-          DB_CONNECTION: ${{secrets.MDB_CONNECTION}}
+          DB_CONNECTION: mongodb://127.0.0.1:27017/
         run: npm test tests/db.test.js
