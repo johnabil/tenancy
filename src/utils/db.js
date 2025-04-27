@@ -37,6 +37,7 @@ function resolveCentralConnection(options = {}) {
   const db_name = process.env.DB_NAME;
 
   try {
+    console.log(connection);
     return Driver.connect(connection, db_name, options);
   } catch (err) {
     throw err;
