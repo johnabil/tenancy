@@ -8,6 +8,13 @@ on:
     branches: [ "**" ]
   pull_request:
     branches: [ "**" ]
+  env:
+    DB_DRIVER: postgres
+    DB_CONNECTION: ${{secrets.DB_CONNECTION}}
+    DB_NAME: tenancy
+    QUEUE_DRIVER: ${{env.QUEUE_DRIVER}}
+    QUEUE_CONNECTION: ${{env.QUEUE_CONNECTION}}
+    QUEUE_TENANT_CONNECTION: ${{env.QUEUE_TENANT_CONNECTION}}
 
 jobs:
   test:
@@ -28,13 +35,6 @@ jobs:
         run: npm i
       - name: Debug env
         run: |
-          echo "NODE_ENV=" ${{secrets.DB_DRIVER}}
+          echo "NODE_ENV=" ${{env.DB_DRIVER}}
       - name: Run Tests
-        env:
-          DB_DRIVER: ${{env.DB_DRIVER}}
-          DB_CONNECTION: ${{env.DB_CONNECTION}}
-          DB_NAME: ${{env.DB_NAME}}
-          QUEUE_DRIVER: ${{env.QUEUE_DRIVER}}
-          QUEUE_CONNECTION: ${{env.QUEUE_CONNECTION}}
-          QUEUE_TENANT_CONNECTION: ${{env.QUEUE_TENANT_CONNECTION}}
         run: npm test
