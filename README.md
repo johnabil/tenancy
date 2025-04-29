@@ -13,6 +13,7 @@ Trying to make it like [Tenancy for Laravel](https://tenancyforlaravel.com)
         - [Queue](#2-queue-connection)
         - [Mongoose Usage](#3-using-mongoose)
         - [Sql Usage](#4-using-sql-with-sequelize)
+    - [TypeScript Support](#typescript-support)
 - [CHANGELOG](CHANGELOG.md) (for latest updates and changes)
 
 ## Support
@@ -68,7 +69,7 @@ const tenancy = require('node-tenancy');
 router.use(tenancy.initializeTenancyMiddleware);
 
 router.get('/get', function (Request, Response) {
-  return Response.status(200).json("Hello");
+    return Response.status(200).json("Hello");
 });
 ```
 
@@ -82,9 +83,9 @@ const tenancy = require('node-tenancy');
 router.use(tenancy.initializeCentralMiddleware);
 
 router.get('/get', function (Request, Response) {
-  return Response.status(200).json({
-    'tenant_id': tenancy.config.getConfig().tenant_id
-  });
+    return Response.status(200).json({
+        'tenant_id': tenancy.config.getConfig().tenant_id
+    });
 });
 ```
 
@@ -119,3 +120,38 @@ Read more about it here [Sequelize guide](docs/SQL.md).
 
 **In case you are using mongodb we assume that domains is an array inside
 tenants collection**
+
+## TypeScript Support
+
+Tenancy now includes TypeScript type definitions. Example usage:
+
+```typescript
+import {config, TenantSchema, db} from 'node-tenancy';
+import {Schema} from 'mongoose';
+
+// Define schemas with TypeScript types
+interface User {
+    username: string;
+    email: string;
+    active: boolean;
+    createdAt: Date;
+}
+
+const userSchema = new Schema<User>({
+    username: String,
+    email: {type: String, required: true},
+    active: {type: Boolean, default: true},
+    createdAt: {type: Date, default: Date.now}
+});
+
+// Configure tenancy
+config.setConfig({
+    central_domains: ["admin.myapp.com"],
+    tenant_schemas: {
+        "User": userSchema
+    },
+    central_schemas: {
+        "Tenant": TenantSchema
+    }
+});
+```

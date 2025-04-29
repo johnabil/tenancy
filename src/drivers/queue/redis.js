@@ -1,5 +1,11 @@
 const {createClient} = require('redis');
 
+/**
+ * Connect to Redis server
+ * @param {string} url - Redis connection URL
+ * @param {Object} options - Redis connection options
+ * @returns {Promise<Object>} - Returns Redis client instance
+ */
 async function connect(url, options = {}) {
   try {
     const basic_config = {
