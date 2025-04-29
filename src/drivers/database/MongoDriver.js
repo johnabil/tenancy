@@ -4,8 +4,8 @@ const DatabaseDriver = require('../../utils/db');
 
 /**
  * Find tenant by domain
- * @param {string} domain - Domain to search for
- * @returns {Promise<Object>} - Returns tenant document
+ * @param {string} domain
+ * @returns {Promise<TenantMongoSchema>}
  */
 function getTenantModel(domain) {
   let model = null;
@@ -51,10 +51,10 @@ function registerSchemas(connection, schemas = {}) {
 
 /**
  * Create a MongoDB connection
- * @param {string} connection - MongoDB connection string
- * @param {string} db_name - Database name
- * @param {Object} options - MongoDB connection options
- * @returns {Object} - Mongoose connection
+ * @param connection
+ * @param db_name
+ * @param options
+ * @returns {Connection}
  */
 function connect(connection, db_name, options = {}) {
   const db_connection = mongoose.createConnection(connection, options);
@@ -73,7 +73,7 @@ function disconnect() {
 /**
  * Get a model by name from the current connection
  * @param {string} model_name - Model name
- * @returns {Object} - Mongoose model
+ * @returns {Object}
  */
 function getModel(model_name) {
   let connection_name = Config.getConfig()?.connection;
@@ -90,12 +90,23 @@ function getModel(model_name) {
 
 /**
  * Get the default tenant schema
- * @returns {Object} - Mongoose schema for tenant
+ * @returns {mongoose.Schema}
  */
 function getDefaultTenantSchema() {
   return require('../../schemas/mongodb/Tenant');
 }
 
+/**
+ * @typedef {Object} MongoDriver
+ * @property {function(string): Promise<TenantMongoSchema>} getTenantModel
+ * @property {function(string, string, Object): Connection} connect
+ * @property {function()} disconnect
+ * @property {function(Object, Object)} registerSchemas
+ * @property {function(string): Object} getModel
+ * @property {function(): Object} getDefaultTenantSchema
+ *
+ * @type MongoDriver
+ */
 module.exports = {
   getTenantModel,
   connect,

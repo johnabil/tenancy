@@ -3,14 +3,20 @@
 const {
   DataTypes,
   Model,
+  Sequelize
 } = require('sequelize');
 
+/**
+ * Return Tenant Default Model
+ * @param {Sequelize} sequelize
+ * @returns {Tenant}
+ */
 module.exports = (sequelize) => {
 
   class Tenant extends Model {
     /**
      * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
+     * This method is not a part of the Sequelize lifecycle.
      * This method is called after defining all app models
      */
     static associate(models) {

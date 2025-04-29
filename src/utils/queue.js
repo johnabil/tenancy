@@ -1,5 +1,10 @@
 const Config = require('../utils/config');
 
+/**
+ * Get the queue driver class based on environment configuration
+ * @returns {RabbitMQDriver|RedisDriver}
+ * @throws {Error}
+ */
 function getDriverClass() {
   let driver = process.env.QUEUE_DRIVER;
 
@@ -13,6 +18,10 @@ function getDriverClass() {
   }
 }
 
+/**
+ * Get the connection URL based on the current connection
+ * @returns {string|null}
+ */
 function getConnectionUrl() {
   let connection = Config.getConfig().connection;
 
@@ -26,6 +35,12 @@ function getConnectionUrl() {
   }
 }
 
+/**
+ * Connect to the queue server based on the current connection
+ * @param url
+ * @param options
+ * @returns {Promise<Object>}
+ */
 async function connect(url = null, options = {}) {
   let connection_url = url || getConnectionUrl();
   return await getDriverClass().connect(connection_url, options);

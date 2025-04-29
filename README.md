@@ -1,7 +1,7 @@
 # Tenancy for Node.js
 
-a package to implement multi tenant apps in node with ease.
-Trying to make it like [Tenancy for Laravel](https://tenancyforlaravel.com)
+A package to implement multi-tenant apps in Node.js or TypeScript with ease.
+Inspired by [Tenancy for Laravel](https://tenancyforlaravel.com)
 
 ## Table of Contents
 
@@ -14,7 +14,7 @@ Trying to make it like [Tenancy for Laravel](https://tenancyforlaravel.com)
         - [Mongoose Usage](#3-using-mongoose)
         - [Sql Usage](#4-using-sql-with-sequelize)
     - [TypeScript Support](#typescript-support)
-- [CHANGELOG](CHANGELOG.md) (for latest updates and changes)
+- [CHANGELOG](CHANGELOG.md) (for the latest updates and changes)
 
 ## Support
 
@@ -56,7 +56,7 @@ So we will provide some steps to begin your SaaS app with ease.
 
 #### 1. Middlewares
 
-Middlewares configure database connections so request can be executed
+Middlewares configure database connections so a request can be executed
 for each tenant based on domains registered to each tenant.
 
 * Tenancy Middleware should be used in tenancy `tenantRoute.js`.
@@ -69,7 +69,7 @@ const tenancy = require('node-tenancy');
 router.use(tenancy.initializeTenancyMiddleware);
 
 router.get('/get', function (Request, Response) {
-    return Response.status(200).json("Hello");
+  return Response.status(200).json("Hello");
 });
 ```
 
@@ -83,9 +83,9 @@ const tenancy = require('node-tenancy');
 router.use(tenancy.initializeCentralMiddleware);
 
 router.get('/get', function (Request, Response) {
-    return Response.status(200).json({
-        'tenant_id': tenancy.config.getConfig().tenant_id
-    });
+  return Response.status(200).json({
+    'tenant_id': tenancy.config.getConfig().tenant_id
+  });
 });
 ```
 
@@ -104,13 +104,13 @@ Check out [Redis guide](docs/REDIS.md) to know more.
 Please read [Mongoose guide](docs/MONGO.md) to know
 in detail mongoose implementation.
 
-#### 4. Using Sql (with sequelize)
+#### 4. Using SQL (with sequelize)
 
-To make it more versatile we have added
-sequelize which supports multiple relational databases.
+To make it more versatile, we have added
+sequelize, which supports multiple relational databases.
 Read more about it here [Sequelize guide](docs/SQL.md).
 
-#### Column names can not be changed:
+#### Column names cannot be changed:
 
 ##### Tenant table/collection:
 
@@ -118,7 +118,7 @@ Read more about it here [Sequelize guide](docs/SQL.md).
 
 ##### Domain table: `domain`
 
-**In case you are using mongodb we assume that domains is an array inside
+**In case you are using mongodb, we assume that domains are an array inside
 tenants collection**
 
 ## TypeScript Support

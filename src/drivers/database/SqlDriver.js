@@ -1,11 +1,11 @@
 const Config = require('../../utils/config');
 const DatabaseDriver = require('../../utils/db');
-const {Sequelize} = require('sequelize');
+const {Sequelize, Model} = require('sequelize');
 
 /**
  * Find tenant by domain
  * @param {string} domain - Domain to search for
- * @returns {Promise<Object>} - Returns tenant document
+ * @returns {Promise<Model>} - Returns a tenant document
  */
 function getTenantModel(domain) {
   let model = null;
@@ -38,10 +38,10 @@ function getTenantModel(domain) {
 
 /**
  * Register schemas with Sequelize connection
- * @param {Object} connection - Sequelize connection
- * @param {Class} schemas - Array of schema definers
+ * @param {Sequelize} connection - Sequelize connection
+ * @param {Function} schemas - Array of schema definers
  */
-function registerSchemas(connection, schemas= null) {
+function registerSchemas(connection, schemas = null) {
   try {
     // Defining models
     for (const modelDefiner of schemas) {
@@ -65,7 +65,7 @@ function registerSchemas(connection, schemas= null) {
  * @param {string} connection - SQL connection string
  * @param {string} db_name - Database name
  * @param {Object} options - SQL connection options
- * @returns {Object} - Sequelize connection
+ * @returns {Sequelize} - Sequelize connection
  */
 function connect(connection, db_name, options = {}) {
   const dialect = process.env.DB_DRIVER;
@@ -78,8 +78,9 @@ function connect(connection, db_name, options = {}) {
 
 /**
  * Get a model by name from the current connection
- * @param {string} model_name - Model name
- * @returns {Object} - Sequelize model
+ * @param {string} model_name
+ * @returns {Model}
+ * @throws {Error}
  */
 function getModel(model_name) {
   let connection_name = Config.getConfig()?.connection;
@@ -96,12 +97,22 @@ function getModel(model_name) {
 
 /**
  * Get the default tenant schema
- * @returns {Function} - Schema definer for Tenant
+ * @returns {(function(Sequelize): Tenant)|{}}
  */
 function getDefaultTenantSchema() {
   return require('../../schemas/sql/Tenant');
 }
 
+/**
+ * @typedef {Object} SqlDriver
+ * @property {function(string): Promise<Model>} getTenantModel
+ * @property {function(string, string, Object): Sequelize} connect
+ * @property {function(Object, Object)} registerSchemas
+ * @property {function(string): Model} getModel
+ * @property {function(): Object} getDefaultTenantSchema
+ *
+ * @type SqlDriver
+ */
 module.exports = {
   getTenantModel,
   connect,

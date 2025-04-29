@@ -15,4 +15,10 @@ async function connect(url, options = {}) {
   }
 }
 
+/**
+ * @typedef {Object} RabbitMQDriver
+ * @property {function(string, Object=): Promise<Object>} connect
+ * @type RabbitMQDriver
+ * @throws {Error}
+ */
 module.exports = {connect};

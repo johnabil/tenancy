@@ -10,7 +10,6 @@
 ### Changed
 
 - Updated all dependencies to latest compatible versions
-- Enhanced JSON response formatting for errors
 
 ### Fixed
 
@@ -18,7 +17,7 @@
 - Schema registration to avoid duplicates
 - Central domain validation logic
 
-## [1.2.1] - 2025-04-29
+## [1.2.1] - 2025-04-27
 
 ### Features
 
@@ -33,7 +32,7 @@
 
 - Improving `queue.connect(url = null, options = {})` method.
   but you can still use it as before.
-- Adding github actions for running `npm test`.
+- Adding GitHub actions for running `npm test`.
 - Improve queue test cases.
 
 ```js
@@ -84,46 +83,46 @@ queueClass.publishMessage('support_test', {'message': 'test'}, true);
 const {queue, config} = require('node-tenancy');
 
 function setConnectionConfig(is_tenant_connection) {
-    if (is_tenant_connection) {
-        config.setConfig({
-            'connection': 'tenant',
-        });
-    } else {
-        config.setConfig({
-            'connection': 'central',
-        });
-    }
+  if (is_tenant_connection) {
+    config.setConfig({
+      'connection': 'tenant',
+    });
+  } else {
+    config.setConfig({
+      'connection': 'central',
+    });
+  }
 }
 
 async function getMessages(queue_name, is_tenant_connection = false) {
-    setConnectionConfig(is_tenant_connection);
+  setConnectionConfig(is_tenant_connection);
 
-    const conn = await queue.connect(queue.getConnectionUrl());
-    const channel = await conn.createChannel();
+  const conn = await queue.connect(queue.getConnectionUrl());
+  const channel = await conn.createChannel();
 
-    await channel.assertQueue(queue_name);
+  await channel.assertQueue(queue_name);
 
-    channel.consume(queue_name, async (msg) => {
-        if (msg !== null) {
-            console.log('Received:', msg.content.toString());
-            channel.ack(msg);
-        } else {
-            console.log('Consumer cancelled by server');
-        }
-        await channel.close();
-        await conn.close();
-    });
+  channel.consume(queue_name, async (msg) => {
+    if (msg !== null) {
+      console.log('Received:', msg.content.toString());
+      channel.ack(msg);
+    } else {
+      console.log('Consumer cancelled by server');
+    }
+    await channel.close();
+    await conn.close();
+  });
 }
 
 async function publishMessage(queue_name, message, is_tenant_connection = false) {
-    setConnectionConfig(is_tenant_connection);
+  setConnectionConfig(is_tenant_connection);
 
-    const conn = await queue.connect(queue.getConnectionUrl());
-    const channel = await conn.createChannel();
-    channel.sendToQueue(queue_name, Buffer.from(JSON.stringify(message)));
-    setTimeout(function () {
-        conn.close();
-    }, 500);
+  const conn = await queue.connect(queue.getConnectionUrl());
+  const channel = await conn.createChannel();
+  channel.sendToQueue(queue_name, Buffer.from(JSON.stringify(message)));
+  setTimeout(function () {
+    conn.close();
+  }, 500);
 }
 
 module.exports = {getMessages, publishMessage};
@@ -147,23 +146,23 @@ errors you might get with v1.0.4***
 const {queue} = require('node-tenancy');
 
 queue.connect(queue.getConnectionUrl(), function (connectionErr, connection) {
-    if (connectionErr) {
-        console.log(connectionErr);
+  if (connectionErr) {
+    console.log(connectionErr);
+  }
+  connection.createChannel(function (channelErr, channel) {
+    if (channelErr) {
+      console.log(channelErr);
     }
-    connection.createChannel(function (channelErr, channel) {
-        if (channelErr) {
-            console.log(channelErr);
-        }
 
-        const queue = 'test';
+    const queue = 'test';
 
-        channel.assertQueue(queue, {
-            durable: true
-        });
+    channel.assertQueue(queue, {
+      durable: true
+    });
 
-        channel.consume(queue, function (msg) {
-            console.log(msg);
-        });
-    })
+    channel.consume(queue, function (msg) {
+      console.log(msg);
+    });
+  })
 });
 ```

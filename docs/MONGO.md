@@ -61,7 +61,7 @@ config.setConfig({
 
 ### 2. Using App Models
 
-We tried to make easy to access specific connection model
+We tried to make it easy to access a specific connection model
 
 ```js
 const {db} = require('node-tenancy');

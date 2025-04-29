@@ -60,4 +60,4 @@ async function publishMessage(channel_name, message, is_tenant_connection = fals
 module.exports = {getMessages, publishMessage};
 ```
 
-#### **Just be careful to provide close connection in the callback function if needed.**
+#### **Just be careful to provide a close connection in the callback function if needed.**

@@ -4,7 +4,7 @@ const Config = require('../utils/config');
 
 
 /**
- * Middleware to initialize central database connection
+ * Middleware to initialize a central database connection
  * Used for admin routes that manage multiple tenants
  *
  * @returns {Promise<void>}

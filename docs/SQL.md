@@ -7,7 +7,7 @@
 
 ### 1. Supported Drivers
 
-Sequelize supports all of this database drivers
+Sequelize supports all of these database drivers
 
 ```text
 mysql
@@ -20,7 +20,7 @@ snowflake
 oracle
 ```
 
-Just make sure to install one of the drivers first.
+Make sure to install one of the drivers first.
 
 ```bash
 # Install One of the following:
@@ -126,7 +126,7 @@ config.setConfig({
 
 ### 3. Using App Models
 
-We tried to make easy to access specific connection model
+We tried to make it easy to access a specific connection model
 
 ```js
 const {db} = require('node-tenancy');
@@ -147,7 +147,7 @@ we provided some commands to make it fast to migrate all changes to
 all tenants or for a specific tenant.
 
 First, you can use sequelize CLI to create tenant migration files with
-providing `--migration-path` option and provide your tenants migration
+providing `--migration-path` option and provide your tenant migration
 path, and you can use `/migrations/tenants`
 as it's the default path the package is using.
 

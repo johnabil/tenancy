@@ -1,6 +1,6 @@
 /**
  * Get the database driver class based on environment configuration
- * @returns {Object} - Database driver module
+ * @returns {SqlDriver|MongoDriver} - Database driver module
  * @throws {Error} - If DB_DRIVER is undefined or unknown
  */
 function getDriverClass() {
