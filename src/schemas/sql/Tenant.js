@@ -3,7 +3,6 @@
 const {
   DataTypes,
   Model,
-  Sequelize
 } = require('sequelize');
 
 /**

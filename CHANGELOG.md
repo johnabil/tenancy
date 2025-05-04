@@ -1,11 +1,12 @@
 # Changelog
 
-## [1.2.2] - 2025-04-29
+## [1.2.2] - 2025-05-04
 
 ### Added
 
 - TypeScript support with type definitions (index.d.ts)
 - Comprehensive JSDoc comments for better code documentation
+- Adding some eslint code checkup and rules
 
 ### Changed
 
@@ -134,12 +135,12 @@ module.exports = {getMessages, publishMessage};
 
 ### File Structure
 
-Changes to all project file structure and namings to match most
+Changes to all project file structures and namings to match most
 used naming conventions.
 
 ### Code Improvements
 
-***It's recommended to upgrade to v1.1.0 because there was some connection
+***It's recommended to upgrade to v1.1.0 because there were some connection
 errors you might get with v1.0.4***
 
 ```js

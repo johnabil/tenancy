@@ -23,8 +23,7 @@ async function connect(url, options = {}) {
 /**
  * @typedef {Object} RedisDriver
  * @property {function(string, Object=): Promise<Object>} connect
- */
-/**
+ *
  * @type RedisDriver
  * @throws {Error}
  */

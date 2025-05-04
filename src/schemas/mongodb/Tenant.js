@@ -10,11 +10,9 @@ const generate_id = require('mongoose').Types;
  * @property {Object} db_options - Database configuration options
  * @property {string[]} domains - Array of tenant domains
  * @property {Object} metadata - Additional tenant metadata
- */
-
-/**
+ *
  * Tenant Schema Definition
- * @type {mongoose.Schema}
+ * @type TenantMongoSchema
  */
 module.exports = new mongoose.Schema({
   _id: generate_id.ObjectId,

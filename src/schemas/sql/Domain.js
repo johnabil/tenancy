@@ -4,6 +4,11 @@ const {
   DataTypes,
 } = require('sequelize');
 
+/**
+ *
+ * @param {Sequelize} sequelize
+ * @returns {Domain}
+ */
 module.exports = (sequelize) => {
   class Domain extends Model {
     /**

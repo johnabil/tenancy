@@ -90,7 +90,7 @@ function getModel(model_name) {
 
 /**
  * Get the default tenant schema
- * @returns {mongoose.Schema}
+ * @returns mongoose.Schema
  */
 function getDefaultTenantSchema() {
   return require('../../schemas/mongodb/Tenant');

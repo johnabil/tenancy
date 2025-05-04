@@ -1,9 +1,7 @@
-// Type definitions for node-tenancy
-// Project: https://github.com/johnabil/tenancy
-// Definitions by: node-tenancy team
-
-import {Schema, Connection, Model} from 'mongoose';
-import {Sequelize} from 'sequelize';
+import {Schema, Connection} from 'mongoose';
+import {Sequelize, Model as SqlModel} from 'sequelize';
+import {MongoDriver} from './src/drivers/database/MongoDriver'
+import {SqlDriver} from './src/drivers/database/SqlDriver'
 
 declare namespace NodeTenancy {
     /**
@@ -25,27 +23,27 @@ declare namespace NodeTenancy {
         tenant_connection?: Connection | Sequelize;
         central_connection?: Connection | Sequelize;
         queue_connection?: string;
-        tenant_schemas?: Record<string, Schema> | Array<(sequelize: Sequelize) => any>;
-        central_schemas?: Record<string, Schema> | Array<(sequelize: Sequelize) => any>;
+        tenant_schemas?: Record<string, Schema> | Array<(sequelize: Sequelize) => SqlModel>;
+        central_schemas?: Record<string, Schema> | Array<(sequelize: Sequelize) => SqlModel>;
 
-        [key: string]: any;
+        [key: string]: unknown;
     }
 
     /**
      * Database utility functions
      */
     interface DatabaseUtils {
-        getDriverClass(): any;
+        getDriverClass(): MongoDriver | SqlDriver;
 
         resolveTenantConnection(connection: string, db_name: string, options?: object): Connection | Sequelize;
 
         resolveCentralConnection(options?: object): Connection | Sequelize;
 
-        registerSchemas(connection: Connection | Sequelize, schemas: Record<string, Schema> | Array<(sequelize: Sequelize) => any>): void;
+        registerSchemas(connection: Connection | Sequelize, schemas: Record<string, Schema> | Array<(sequelize: Sequelize) => SqlModel>): void;
 
-        getModel(model_name: string): Model<any> | any;
+        getModel(model_name: string): SqlModel | object;
 
-        getDefaultTenantSchema(): Schema | ((sequelize: Sequelize) => any);
+        getDefaultTenantSchema(): Schema | ((sequelize: Sequelize) => SqlModel);
     }
 
     /**
@@ -54,13 +52,13 @@ declare namespace NodeTenancy {
     interface QueueUtils {
         getConnectionUrl(): string;
 
-        connect(url?: string, options?: object): Promise<any>;
+        connect(url?: string, options?: object): Promise<object>;
     }
 
     /**
      * Express middleware function
      */
-    type Middleware = (Request: any, Response: any, Next: any) => void | Promise<void>;
+    type Middleware = (Request: object, Response: object, Next: object) => void | Promise<void>;
 
     /**
      * Main module interface
@@ -70,7 +68,7 @@ declare namespace NodeTenancy {
         db: DatabaseUtils;
         queue: QueueUtils;
         TenantSchema: Schema;
-        DomainSchema: (sequelize: Sequelize) => any;
+        DomainSchema: (sequelize: Sequelize) => SqlModel;
         initializeTenancyMiddleware: Middleware;
         initializeCentralMiddleware: Middleware;
     }
