@@ -41,7 +41,7 @@ declare namespace NodeTenancy {
 
         registerSchemas(connection: Connection | Sequelize, schemas: Record<string, Schema> | Array<(sequelize: Sequelize) => SqlModel>): void;
 
-        getModel(model_name: string): SqlModel | object;
+        getModel(model_name: string): SqlModel | Mongoose.Model;
 
         getDefaultTenantSchema(): Schema | ((sequelize: Sequelize) => SqlModel);
     }

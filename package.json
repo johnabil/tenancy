@@ -26,7 +26,8 @@
     "sql",
     "sequelize",
     "rabbitmq",
-    "redis"
+    "redis",
+    "Typescript"
   ],
   "author": "John Nabil",
   "license": "ISC",

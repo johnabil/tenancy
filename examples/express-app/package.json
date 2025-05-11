@@ -16,6 +16,6 @@
     "mongodb": "^6.15.0",
     "mongoose": "^8.12.1",
     "morgan": "~1.9.1",
-    "node-tenancy": "^1.1.0"
+    "node-tenancy": "^1.2.2"
   }
 }

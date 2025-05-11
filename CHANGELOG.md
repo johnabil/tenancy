@@ -1,12 +1,13 @@
 # Changelog
 
-## [1.2.2] - 2025-05-04
+## [1.2.2] - 2025-05-11
 
 ### Added
 
 - TypeScript support with type definitions (index.d.ts)
 - Comprehensive JSDoc comments for better code documentation
 - Adding some eslint code checkup and rules
+- Bun project example using `Elysia`
 
 ### Changed
 

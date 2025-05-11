@@ -73,7 +73,7 @@ function disconnect() {
 /**
  * Get a model by name from the current connection
  * @param {string} model_name - Model name
- * @returns {Object}
+ * @returns {Mongoose.Model}
  */
 function getModel(model_name) {
   let connection_name = Config.getConfig()?.connection;

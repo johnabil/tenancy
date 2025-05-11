@@ -20,6 +20,8 @@ Inspired by [Tenancy for Laravel](https://tenancyforlaravel.com)
 
 | **Packages**                                                | **Version**     |
 |-------------------------------------------------------------|-----------------|
+| typescript-eslint                                           | 8.31.1 or later |
+| eslint                                                      | 9.25.1 or later |
 | mongodb                                                     | 6.13.1 or later |
 | mongoose                                                    | 8.10.1 or later |
 | sequelize                                                   | 6.37 or later   |
@@ -122,6 +124,8 @@ Read more about it here [Sequelize guide](docs/SQL.md).
 tenants collection**
 
 ## TypeScript Support
+
+See Bun Example [here](examples/bun-app)
 
 Tenancy now includes TypeScript type definitions. Example usage:
 
