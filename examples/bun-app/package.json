@@ -1,0 +1,24 @@
+{
+  "name": "bun-app",
+  "version": "1.0.50",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "bun run --watch src/index.ts"
+  },
+  "dependencies": {
+    "@elysiajs/node": "^1.2.6",
+    "@types/cors": "^2.8.18",
+    "cors": "^2.8.5",
+    "elysia": "latest",
+    "elysia-connect-middleware": "^0.0.5",
+    "mongodb": "^6.16.0",
+    "mongoose": "^8.14.1",
+    "node-tenancy": "^1.2.2",
+    "pg": "^8.15.6",
+    "pg-hstore": "^2.3.4"
+  },
+  "devDependencies": {
+    "bun-types": "latest"
+  },
+  "module": "src/index.js"
+}

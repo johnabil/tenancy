@@ -20,7 +20,7 @@ async function getMessages(queue_name, is_tenant_connection = false) {
 
   await channel.assertQueue(queue_name);
 
-  channel.consume(queue_name, async (msg) => {
+  await channel.consume(queue_name, async (msg) => {
     if (msg !== null) {
       console.log('Received:', msg.content.toString());
       channel.ack(msg);

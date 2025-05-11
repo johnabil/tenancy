@@ -1,6 +1,6 @@
 require('dotenv').config({override: true});
 
-const {db, config} = require('../index');
+const {db} = require('../index');
 const db_name = 'testing';
 const db_utils = require('./dbUtils');
 process.env.DB_NAME = db_name;
@@ -34,7 +34,7 @@ test('Tenant Default Schema test', () => {
   const tenantSchemaKeys = Object.keys(tenantSchema?.obj || {});
 
   expect(schemaKeys).toEqual(expect.arrayContaining(tenantSchemaKeys));
-  if (process.env.DB_DRIVER != 'mongodb') {
+  if (process.env.DB_DRIVER !== 'mongodb') {
     expect(mockFunction.mock.results[0].value).not.toBeNull();
   }
 });

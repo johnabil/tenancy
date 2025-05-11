@@ -1,5 +1,11 @@
 const {createClient} = require('redis');
 
+/**
+ * Connect to Redis server
+ * @param {string} url - Redis connection URL
+ * @param {Object} options - Redis connection options
+ * @returns {Promise<Object>} - Returns Redis client instance
+ */
 async function connect(url, options = {}) {
   try {
     const basic_config = {
@@ -14,4 +20,11 @@ async function connect(url, options = {}) {
   }
 }
 
+/**
+ * @typedef {Object} RedisDriver
+ * @property {function(string, Object=): Promise<Object>} connect
+ *
+ * @type RedisDriver
+ * @throws {Error}
+ */
 module.exports = {connect};

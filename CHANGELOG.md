@@ -1,6 +1,25 @@
 # Changelog
 
-## v1.2.1 - 27 Apr, 2025
+## [1.2.2] - 2025-05-11
+
+### Added
+
+- TypeScript support with type definitions (index.d.ts)
+- Comprehensive JSDoc comments for better code documentation
+- Adding some eslint code checkup and rules
+- Bun project example using `Elysia`
+
+### Changed
+
+- Updated all dependencies to latest compatible versions
+
+### Fixed
+
+- Connection cleanup on errors
+- Schema registration to avoid duplicates
+- Central domain validation logic
+
+## [1.2.1] - 2025-04-27
 
 ### Features
 
@@ -15,7 +34,7 @@
 
 - Improving `queue.connect(url = null, options = {})` method.
   but you can still use it as before.
-- Adding github actions for running `npm test`.
+- Adding GitHub actions for running `npm test`.
 - Improve queue test cases.
 
 ```js
@@ -31,7 +50,7 @@ const connection = await queue.connect('redis://test:test@redis.test');
 
 ---
 
-## v1.2.0 - 16 Apr, 2025
+## [1.2.0] - 2025-04-16
 
 ### Features
 
@@ -44,7 +63,7 @@ const connection = await queue.connect('redis://test:test@redis.test');
 
 ---
 
-## v1.1.0 - 16 Mar, 2025
+## [1.1.0] - 2025-03-16
 
 Adding jest tests and some code improvements to queue connection.
 
@@ -113,16 +132,16 @@ module.exports = {getMessages, publishMessage};
 
 ---
 
-## v1.0.4 - 7 Mar, 2025
+## [1.0.4] - 2025-03-07
 
 ### File Structure
 
-Changes to all project file structure and namings to match most
+Changes to all project file structures and namings to match most
 used naming conventions.
 
 ### Code Improvements
 
-***It's recommended to upgrade to v1.1.0 because there was some connection
+***It's recommended to upgrade to v1.1.0 because there were some connection
 errors you might get with v1.0.4***
 
 ```js

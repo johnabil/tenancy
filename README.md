@@ -1,7 +1,7 @@
 # Tenancy for Node.js
 
-a package to implement multi tenant apps in node with ease.
-Trying to make it like [Tenancy for Laravel](https://tenancyforlaravel.com)
+A package to implement multi-tenant apps in Node.js or TypeScript with ease.
+Inspired by [Tenancy for Laravel](https://tenancyforlaravel.com)
 
 ## Table of Contents
 
@@ -13,12 +13,15 @@ Trying to make it like [Tenancy for Laravel](https://tenancyforlaravel.com)
         - [Queue](#2-queue-connection)
         - [Mongoose Usage](#3-using-mongoose)
         - [Sql Usage](#4-using-sql-with-sequelize)
-- [CHANGELOG](CHANGELOG.md) (for latest updates and changes)
+    - [TypeScript Support](#typescript-support)
+- [CHANGELOG](CHANGELOG.md) (for the latest updates and changes)
 
 ## Support
 
 | **Packages**                                                | **Version**     |
 |-------------------------------------------------------------|-----------------|
+| typescript-eslint                                           | 8.31.1 or later |
+| eslint                                                      | 9.25.1 or later |
 | mongodb                                                     | 6.13.1 or later |
 | mongoose                                                    | 8.10.1 or later |
 | sequelize                                                   | 6.37 or later   |
@@ -55,7 +58,7 @@ So we will provide some steps to begin your SaaS app with ease.
 
 #### 1. Middlewares
 
-Middlewares configure database connections so request can be executed
+Middlewares configure database connections so a request can be executed
 for each tenant based on domains registered to each tenant.
 
 * Tenancy Middleware should be used in tenancy `tenantRoute.js`.
@@ -103,13 +106,13 @@ Check out [Redis guide](docs/REDIS.md) to know more.
 Please read [Mongoose guide](docs/MONGO.md) to know
 in detail mongoose implementation.
 
-#### 4. Using Sql (with sequelize)
+#### 4. Using SQL (with sequelize)
 
-To make it more versatile we have added
-sequelize which supports multiple relational databases.
+To make it more versatile, we have added
+sequelize, which supports multiple relational databases.
 Read more about it here [Sequelize guide](docs/SQL.md).
 
-#### Column names can not be changed:
+#### Column names cannot be changed:
 
 ##### Tenant table/collection:
 
@@ -117,5 +120,42 @@ Read more about it here [Sequelize guide](docs/SQL.md).
 
 ##### Domain table: `domain`
 
-**In case you are using mongodb we assume that domains is an array inside
+**In case you are using mongodb, we assume that domains are an array inside
 tenants collection**
+
+## TypeScript Support
+
+See Bun Example [here](examples/bun-app)
+
+Tenancy now includes TypeScript type definitions. Example usage:
+
+```typescript
+import {config, TenantSchema, db} from 'node-tenancy';
+import {Schema} from 'mongoose';
+
+// Define schemas with TypeScript types
+interface User {
+    username: string;
+    email: string;
+    active: boolean;
+    createdAt: Date;
+}
+
+const userSchema = new Schema<User>({
+    username: String,
+    email: {type: String, required: true},
+    active: {type: Boolean, default: true},
+    createdAt: {type: Date, default: Date.now}
+});
+
+// Configure tenancy
+config.setConfig({
+    central_domains: ["admin.myapp.com"],
+    tenant_schemas: {
+        "User": userSchema
+    },
+    central_schemas: {
+        "Tenant": TenantSchema
+    }
+});
+```

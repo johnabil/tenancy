@@ -1,6 +1,6 @@
 {
   "name": "node-tenancy",
-  "version": "1.2.1",
+  "version": "1.2.2-beta.0",
   "description": "Automatic multi-tenancy for Node with support to Rabbitmq",
   "main": "index.js",
   "homepage": "https://github.com/johnabil/tenancy#readme",
@@ -9,7 +9,8 @@
     "url": "https://github.com/johnabil/tenancy"
   },
   "scripts": {
-    "test": "jest --detectOpenHandles"
+    "test": "jest --detectOpenHandles",
+    "lint": "eslint . --ext .js,.ts --config eslint.config.mjs"
   },
   "bin": {
     "tenancy-db": "bin/db.js"
@@ -25,7 +26,8 @@
     "sql",
     "sequelize",
     "rabbitmq",
-    "redis"
+    "redis",
+    "Typescript"
   ],
   "author": "John Nabil",
   "license": "ISC",
@@ -33,7 +35,7 @@
     "amqplib": "^0.10.5",
     "commander": "^13.1.0",
     "dotenv": "^16.4.7",
-    "mongodb": "^6.13.1",
+    "mongodb": "6.15",
     "mongoose": "^8.10.1",
     "redis": "^4.7.0",
     "sequelize": "^6.37.6",
@@ -42,10 +44,18 @@
   "devDependencies": {
     "@babel/core": "^7.26.9",
     "@babel/preset-env": "^7.26.9",
+    "@babel/preset-typescript": "^7.27.0",
+    "@eslint/js": "^9.25.1",
     "@shelf/jest-mongodb": "^5.1.0",
+    "@types/amqplib": "^0.10.5",
+    "@types/node": "^20.11.30",
     "babel-jest": "^29.7.0",
+    "eslint": "^9.25.1",
+    "eslint-plugin-node": "^11.1.0",
+    "globals": "^16.0.0",
     "jest": "^29.7.0",
     "pg": "^8.14.1",
-    "pg-hstore": "^2.3.4"
+    "pg-hstore": "^2.3.4",
+    "typescript-eslint": "^8.31.1"
   }
 }

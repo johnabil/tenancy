@@ -4,11 +4,16 @@ const {
   DataTypes,
 } = require('sequelize');
 
+/**
+ *
+ * @param {Sequelize} sequelize
+ * @returns {Domain}
+ */
 module.exports = (sequelize) => {
   class Domain extends Model {
     /**
      * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
+     * This method is not a part of the Sequelize lifecycle.
      * This method is called after defining all app models
      */
     static associate(models) {

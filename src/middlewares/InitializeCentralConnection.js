@@ -2,6 +2,16 @@ const DatabaseDriver = require('../utils/db');
 const QueueDriver = require('../utils/queue');
 const Config = require('../utils/config');
 
+
+/**
+ * Middleware to initialize a central database connection
+ * Used for admin routes that manage multiple tenants
+ *
+ * @returns {Promise<void>}
+ * @param Request
+ * @param Response
+ * @param Next
+ */
 module.exports = function (Request, Response, Next) {
   const central_domains = Config.getConfig().central_domains;
   const domain = Request.hostname;
