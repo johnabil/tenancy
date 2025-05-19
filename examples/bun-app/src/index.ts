@@ -2,6 +2,8 @@ import {Elysia} from "elysia";
 import {APIRoutes} from "../routes/APIRoutes";
 import {config, TenantSchema} from "node-tenancy";
 import {Schema} from "mongoose";
+// import {getMessages, publishMessage} from "../controllers/RabbitmqController";
+import {getMessages, publishMessage} from "../controllers/RedisController";
 
 const app = new Elysia();
 
@@ -18,6 +20,9 @@ const userSchema = new Schema<User>({
     active: {type: Boolean, default: true},
     createdAt: {type: Date, default: Date.now}
 });
+
+getMessages('test', true).then().catch(e => console.log(e));
+publishMessage('test', {'message': 'test'}, true).then().catch(e => console.log(e));
 
 // Configure tenancy
 config.setConfig({

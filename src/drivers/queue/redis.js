@@ -1,10 +1,10 @@
-const {createClient} = require('redis');
+const {createClient, RedisClientType} = require('redis');
 
 /**
  * Connect to Redis server
  * @param {string} url - Redis connection URL
  * @param {Object} options - Redis connection options
- * @returns {Promise<Object>} - Returns Redis client instance
+ * @returns Promise<RedisClientType> - Returns Redis client instance
  */
 async function connect(url, options = {}) {
   try {
@@ -22,7 +22,7 @@ async function connect(url, options = {}) {
 
 /**
  * @typedef {Object} RedisDriver
- * @property {function(string, Object=): Promise<Object>} connect
+ * @property {function(string, Object=): Promise<RedisClientType>} connect
  *
  * @type RedisDriver
  * @throws {Error}

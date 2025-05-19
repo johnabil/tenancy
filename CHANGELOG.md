@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.2.3] - 2025-05-19
+
+### Added
+
+- Pub-Sub example to `Elysia` project example.
+
+### Enhancements
+
+- Improving `typescript` return types from `QueueUtils`.
+
 ## [1.2.2] - 2025-05-11
 
 ### Added

@@ -1,4 +1,6 @@
 const Config = require('../utils/config');
+const {RedisClientType} = require('redis');
+const {ChannelModel} = require('amqplib');
 
 /**
  * Get the queue driver class based on environment configuration
@@ -39,7 +41,7 @@ function getConnectionUrl() {
  * Connect to the queue server based on the current connection
  * @param url
  * @param options
- * @returns {Promise<Object>}
+ * @returns {Promise<RedisClientType | ChannelModel>}
  */
 async function connect(url = null, options = {}) {
   let connection_url = url || getConnectionUrl();

@@ -1,11 +1,12 @@
 const RabbitMQ = require('amqplib');
+const {ChannelModel} = require('amqplib');
 
 
 /**
  * Connect to RabbitMQ server with retry capability
  * @param {string} url - RabbitMQ connection URL
  * @param {Object} options - RabbitMQ connection options
- * @returns {Promise<Object>} - Returns RabbitMQ connection
+ * @returns Promise<ChannelModel> - Returns RabbitMQ connection
  */
 async function connect(url, options = {}) {
   try {
@@ -17,7 +18,8 @@ async function connect(url, options = {}) {
 
 /**
  * @typedef {Object} RabbitMQDriver
- * @property {function(string, Object=): Promise<Object>} connect
+ * @property {function(string, Object=): Promise<ChannelModel>} connect
+ *
  * @type RabbitMQDriver
  * @throws {Error}
  */

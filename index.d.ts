@@ -2,6 +2,8 @@ import {Schema, Connection} from 'mongoose';
 import {Sequelize, Model as SqlModel} from 'sequelize';
 import {MongoDriver} from './src/drivers/database/MongoDriver'
 import {SqlDriver} from './src/drivers/database/SqlDriver'
+import {RedisClientType} from "redis";
+import {ChannelModel} from "amqplib";
 
 declare namespace NodeTenancy {
     /**
@@ -52,7 +54,7 @@ declare namespace NodeTenancy {
     interface QueueUtils {
         getConnectionUrl(): string;
 
-        connect(url?: string, options?: object): Promise<object>;
+        connect(url?: string, options?: object): Promise<RedisClientType | ChannelModel>;
     }
 
     /**

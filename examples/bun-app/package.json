@@ -15,7 +15,8 @@
     "mongoose": "^8.14.1",
     "node-tenancy": "^1.2.2",
     "pg": "^8.15.6",
-    "pg-hstore": "^2.3.4"
+    "pg-hstore": "^2.3.4",
+    "redis": "^5.0.1"
   },
   "devDependencies": {
     "bun-types": "latest"

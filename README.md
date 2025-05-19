@@ -14,6 +14,8 @@ Inspired by [Tenancy for Laravel](https://tenancyforlaravel.com)
         - [Mongoose Usage](#3-using-mongoose)
         - [Sql Usage](#4-using-sql-with-sequelize)
     - [TypeScript Support](#typescript-support)
+    - [Elysia Bun Project Example](examples/bun-app)
+    - [Express Project Example](examples/express-app)
 - [CHANGELOG](CHANGELOG.md) (for the latest updates and changes)
 
 ## Support
